@@ -1,30 +1,24 @@
-# MATACS-TH-2026-02 — AI proposal triage design
+# MATACS-TH-2026-02
 
-**Candidate:** Zain *(update this to your full legal name before submitting)*  
-**Reference:** MATACS-TH-2026-02  
-**Role:** Associate Software Developer  
-**Time spent:** ~55 minutes  
 
-## What’s in here
+Design for an AI-assisted proposal triage flow. No app to deploy — just the write-up, diagram, prompts, and sample ranking the brief asked for.
 
-| File | What it is |
-| --- | --- |
-| [diagram/process-flow.png](./diagram/process-flow.png) | Flow from upload → ranked list (rules / AI / human marked) |
-| [WRITEUP.md](./WRITEUP.md) | Answers to the five brief questions |
-| [PROMPTS.md](./PROMPTS.md) | Extraction + scoring prompts as I would send them |
-| [ranking.json](./ranking.json) | How I’d place sample proposals A–E |
-| [prototype/](./prototype/) | Optional offline scorer — no API keys, runs the rule gate + numeric math on fixture extracts |
+## Files
 
-No deployed app. No copy of the brief text in this repo.
+- [diagram/process-flow.png](./diagram/process-flow.png) — flow from upload to ranked list
+- [WRITEUP.md](./WRITEUP.md) — answers to the five questions
+- [PROMPTS.md](./PROMPTS.md) — prompts I’d actually send
+- [ranking.json](./ranking.json) — how I’d place A–E
+- [prototype/score_samples.mjs](./prototype/score_samples.mjs) — optional; runs the rule checks + number math offline (no API key)
 
-## Design in one paragraph
+## Quick take
 
-Pull admin criteria at runtime, extract fields with AI into JSON, fail mandatories and weird cases with rules (not the model), score hard numbers in code, let AI help only on soft criteria, then hand a person a ranked list with evidence. On the sample set that means **A #1, E #2**, **D flagged** (no firm weeks), **C flagged** (injection), **B ineligible** (licence not held by the bidder).
+Load criteria from admin config (nothing hard-coded). Use AI to pull fields out of the PDF text. Use normal code for pass/fail mandatories, flags, and the weighted math. A person still makes the award.
 
-## How I used AI tools
+On the sample set: **A #1, E #2**. **B** is ineligible (no licence held by the bidder). **D** is flagged (no firm weeks). **C** is flagged (text trying to tell the system to rank it first).
 
-I used an AI coding assistant to turn a hand-sketched flow into an SVG/PNG and to tidy folder layout. I did **not** let it invent the ranking: it first tried to keep C in the ranked list with a discounted score, and I overruled that. Once a proposal is trying to rewrite the reviewer’s instructions, it shouldn’t sit in the auto-rank at all — `flagged` plus a human eyes-on is the safer default for a facilities award. I also cut a bunch of generic “leverage / robust pipeline” wording it suggested in the write-up and rewrote those bits in my own words.
+## How I used AI
 
-## Submit note
+I used Cursor to help draft the diagram PNG and to check the folder layout against the brief. I changed the ranking myself — the assistant wanted to keep C in the ranked list with a penalty, and I said no. If a proposal is trying to rewrite the review instructions, it shouldn’t get an auto-rank at all. I also rewrote parts of the write-up where the draft sounded too polished / generic.
 
-Push this as a **public** GitHub repo named `matacs-th-2026-02`, then paste only the repo URL into the Google Form from the brief. Don’t email the files.
+Submit only the public GitHub repo URL through the Google Form. Repo name: `matacs-th-2026-02`.

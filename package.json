@@ -1,0 +1,8 @@
+﻿{
+  "name": "matacs-th-2026-02",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prototype": "node prototype/score_samples.mjs"
+  }
+}
